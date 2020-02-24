@@ -5,6 +5,6 @@ const getPokeImageUrl = (pokemon) => {
     return `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${imageName}.png`;
 };
 
-export const PokemonImage = ({ pokemon }) => <div class="pokeimage-container">
-    <img class="pokeimage" src={getPokeImageUrl(pokemon)} alt={pokemon.name} />
+export const PokemonImage = ({ pokemon }) => <div className="pokeimage-container">
+    <img className="pokeimage" src={getPokeImageUrl(pokemon)} alt={pokemon.name} />
 </div>;

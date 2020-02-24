@@ -1,5 +1,4 @@
-import React from 'react'
-import { pokemon } from '../../data/pokemon.2.json'
+import React, { useState, useEffect } from 'react'
 import { PokemonTitle } from './PokemonTitle';
 import { PokemonDescription } from './PokemonDescription';
 import { PokemonImage } from './PokemonImage';
@@ -8,9 +7,22 @@ import { PokemonTypeInfo } from './PokemonTypeInfo';
 import { PokemonStatsTable } from './PokemonStatsTable';
 
 const PokemonPage = () => {
+    const [pokemon, setPokemon] = useState(null)
+
+    useEffect(() => {
+        fetch('http://localhost:4000/api/10')
+            .then(res => res.json())
+            .then(({pokemon}) => setPokemon(pokemon))
+    }, [])
+
+    if (!pokemon) {
+        return  <div>Loading</div>
+    }
+
+console.log(pokemon)
     return <div>
         <PokemonTitle pokemon={pokemon} />
-        <div class="fullinfogrid">
+        <div className="fullinfogrid">
             <PokemonImage pokemon={pokemon} />
             <PokemonDescription />
             <PokemonMiscInfo pokemon={pokemon} />
