@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react'
-import { PokemonTitle } from './PokemonTitle';
 import { PokemonDescription } from './PokemonDescription';
 import { PokemonImage } from './PokemonImage';
 import { PokemonMiscInfo } from './PokemonMiscInfo';
 import { PokemonTypeInfo } from './PokemonTypeInfo';
 import { PokemonStatsTable } from './PokemonStatsTable';
-import { useParams } from "react-router-dom";
+import { useParams, useRouteMatch } from "react-router-dom";
+import { PokemonTitleBar } from './PokemonTitleBar';
 
 const PokemonPage = () => {
     const { pokemonId } = useParams(); 
     const [pokemon, setPokemon] = useState(null)
 
+    let match = useRouteMatch();
     useEffect(() => {
         fetch(`http://localhost:4000/api/${pokemonId}`)
             .then(res => res.json())
@@ -20,10 +21,8 @@ const PokemonPage = () => {
     if (!pokemon) {
         return  <div>Loading</div>
     }
-
-console.log(pokemon)
     return <div>
-        <PokemonTitle pokemon={pokemon} />
+            <PokemonTitleBar match={match} pokemon={pokemon} />
         <div className="fullinfogrid">
             <PokemonImage pokemon={pokemon} />
             <PokemonDescription />
@@ -36,3 +35,5 @@ console.log(pokemon)
 
 
 export default PokemonPage
+
+
