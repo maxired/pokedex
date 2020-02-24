@@ -15,7 +15,7 @@ blandit hendrerit felis. Mauris id porttitor magna. Nullam et convallis orci, no
 </div>
 
 
-const PokemonTitle = ({ pokemon }) => <h1 class="pokename">{pokemon.name}<span class="pokeid">{ pokemon.pokemon_id }</span></h1>
+const PokemonTitle = ({ pokemon }) => <h1 class="pokename">{pokemon.name} <span class="pokeid">{ pokemon.pokemon_id }</span></h1>
 
 const PokemonImage = ({ pokemon }) => <div class="pokeimage-container">
 <img class="pokeimage"
@@ -30,6 +30,8 @@ const PokemonPage = () => {
             <PokemonImage pokemon={pokemon} />
             <PokemonDescription />
             <PokemonMiscInfo pokemon={pokemon} />
+            <PokemonTypeInfo pokemon={pokemon} />
+            <PokemonStatsTable pokemon={pokemon} />
         </div>
     </div>
 }
@@ -69,4 +71,32 @@ const PokemonMiscInfo = ({ pokemon }) => (
 </div>
 )
 
+const PokemonTypeInfo = ({ pokemon }) => <div class="typeInfo">
+<div>Type</div>
+<div class={`type background-color-${pokemon.type1.toLowerCase()}`}>{ pokemon.type1 }</div>
+{ pokemon.type2 && ' ' }
+{ pokemon.type2 && <div class={`type background-color-${pokemon.type2.toLowerCase()}`}>{pokemon.type2}</div> }
+</div>
+
+const STATS_LINE = ['Attack', 'Defense', 'HP', 'Special Attack', 'Special Defense', 'Speed']
+
+const PokemonStatLine = ({ pokemon, stat }) => {
+    const statNormalized = pokemon[stat] / 255;
+
+    return [
+        <div class="statName">{ stat } :</div>,
+        <div class="statBar"
+            style={{ 
+                width: `${statNormalized*100}%`,
+                backgroundColor: `hsl(${statNormalized * 200 },60%,50%)`
+            }}
+        >
+        {pokemon[stat]}
+        </div>
+    ]
+}
+
+const PokemonStatsTable = ({ pokemon }) => <div class="statsTable">
+    { STATS_LINE.map((stat) => <PokemonStatLine pokemon={pokemon} stat={stat} /> )}
+</div>
 export default PokemonPage
