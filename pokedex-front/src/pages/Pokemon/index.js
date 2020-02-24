@@ -5,15 +5,17 @@ import { PokemonImage } from './PokemonImage';
 import { PokemonMiscInfo } from './PokemonMiscInfo';
 import { PokemonTypeInfo } from './PokemonTypeInfo';
 import { PokemonStatsTable } from './PokemonStatsTable';
+import { useParams } from "react-router-dom";
 
 const PokemonPage = () => {
+    const { pokemonId } = useParams(); 
     const [pokemon, setPokemon] = useState(null)
 
     useEffect(() => {
-        fetch('http://localhost:4000/api/10')
+        fetch(`http://localhost:4000/api/${pokemonId}`)
             .then(res => res.json())
             .then(({pokemon}) => setPokemon(pokemon))
-    }, [])
+    }, [pokemonId])
 
     if (!pokemon) {
         return  <div>Loading</div>
