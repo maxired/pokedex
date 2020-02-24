@@ -1,7 +1,12 @@
 import React from 'react'
 import { pokemon } from '../../data/pokemon.2.json'
 
-const getPokeImageUrl = () => 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/002.png'
+const getPokeImageUrl = (pokemon) => {
+
+    const imageName = `000${pokemon.pokemon_id}`.slice(-3);
+    return `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${imageName}.png`
+}
+
 
 const PokemonDescription = () => <div class="description">
 Pellentesque dignissim blandit iaculis. Nullam eleifend molestie nibh ac venenatis. Fusce enim erat, rutrum
@@ -24,8 +29,44 @@ const PokemonPage = () => {
         <div class="fullinfogrid">
             <PokemonImage pokemon={pokemon} />
             <PokemonDescription />
+            <PokemonMiscInfo pokemon={pokemon} />
         </div>
     </div>
 }
+
+
+const getPokemonWeight = (pokemon) => {
+    if (pokemon.weight < 10) 
+        return `${pokemon.weight * 100} g`
+    
+    return `${pokemon.weight / 10} kg`
+}
+
+const PokemonMiscInfo = ({ pokemon }) => (
+    <div class="miscInfo">
+    <div class="info">
+        <div class="infoTitle">Height</div>
+        <div class="infoData">{ pokemon.height / 10 } m</div>
+    </div>
+    <div class="info">
+        <div class="infoTitle">Category</div>
+        <div class="infoData">{ pokemon.category }</div>
+    </div>
+    <div class="info">
+        <div class="infoTitle">Weight</div>
+        <div class="infoData">
+            { getPokemonWeight(pokemon) }
+        </div>
+    </div>
+    <div class="info">
+        <div class="infoTitle">Abilities</div>
+        <div class="infoData">
+            { pokemon.ability1 && <div>{pokemon.ability1}</div>}
+            { pokemon.ability2 && <div>{pokemon.ability2}</div>}
+            { pokemon.ability3 && <div>{pokemon.ability3}</div>}
+        </div>
+    </div>
+</div>
+)
 
 export default PokemonPage
