@@ -15,4 +15,16 @@ router.get('/:pokemon', function (req, res) {
     });
 });
 
+router.get('/api/pokemon', function (req, res) {
+    database.getAllPokemon((results) => {
+        res.send({pokemon: results, limit: 20, skip: 0});
+    });
+})
+
+router.get('/api/pokemon/:pokemon', function (req, res) {
+	database.getPokemon(req.params.pokemon, (result) => {
+        res.send({pokemon: result});
+    });
+})
+
 module.exports = router;
