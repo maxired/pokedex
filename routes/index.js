@@ -25,6 +25,6 @@ router.get('/api/pokemon', function (req, res) {
 
 router.get('/api/pokemon/:pokemon', function (req, res) {
     database.getPokemon(req.params.pokemon, (result) => {
-        res.render('pokemon', {pokemon: result});
+        res.json({pokemon: result});
     });
 });
