@@ -11,15 +11,17 @@ router.get('/', function (req, res) {
 
 router.get('/:pokemon', function (req, res) {
     database.getPokemon(req.params.pokemon, (result) => {
+        if(!result || result.lenght === 0){
+            return res.send()
+        }
         res.render('pokemon', {pokemon: result});
     });
 });
 
 
-router .get ('/api/pokemon',function(req,res){
+router.get ('/api/pokemon',function(req,res){
     database.getAllPokemon((results)=>{
         res.send({pokemon:results})
-
     });
 });
 
