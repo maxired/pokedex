@@ -8,6 +8,13 @@ router.get('/', function (req, res) {
     });
 });
 
+router.get('/api/', function (req, res) {
+    const { limit = 20, skip = 0 } = req.query;
+    database.getPokemons({ limit, skip }, (results) => {
+        res.send({ pokemons: results, limit, skip });
+    });
+});
+
 
 router.get('/:pokemon', function (req, res) {
     database.getPokemon(req.params.pokemon, (result) => {
